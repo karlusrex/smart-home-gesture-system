@@ -1,5 +1,4 @@
 # smart-home-gesture-system
- Smart Home Gesture System IOT
+Smart Home Gesture System IOT
 
-Ggsdgsdgsdgsdg
-JFIOASOIPASIOJIOj
+Program to control multiple sensors in a smart home environment 
