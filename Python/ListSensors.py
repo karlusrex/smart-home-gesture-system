@@ -19,7 +19,7 @@ nonce = uuid.uuid4().hex
 oauthSignature = (privkey + "%26" + secret)
 # GET-request
 response = requests.get(
-    url="https://pa-api.telldus.com/json/devices/list",
+    url="https://pa-api.telldus.com/json/sensors/list",
 
     params={
 
