@@ -11,7 +11,7 @@ Software to control multiple sensors in a smart home environment
 - Actuator
 - Bluetooth speaker (or any kind of speaker)
 
-## Softare
+## Sofwatare
 
 - OpenCV
 - gTTS (Google Text To Speech)
