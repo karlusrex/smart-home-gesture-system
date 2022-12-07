@@ -24,7 +24,7 @@
     <Button
             android:text="Edit Gesture"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button"
+            android:layout_height="wrap_content" android:id="@+id/editGesture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
     <Button
             android:text="Add New Gesture"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button2"
+            android:layout_height="wrap_content" android:id="@+id/addNewGesture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
     <Button
             android:text="Remove Gesture"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button3"
+            android:layout_height="wrap_content" android:id="@+id/removeGesture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.498"
