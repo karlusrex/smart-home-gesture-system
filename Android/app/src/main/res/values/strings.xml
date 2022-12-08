@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Smart Home Gesture Control</string>
+
+    <string-array name="devices">
+        <item>Actuator 1</item> <!--Test data make this dynamic-->
+        <item>Actuator 2</item>
+    </string-array>
+
+    <string-array name="sensors">
+        <item>Sensor 1</item> <!--Test data make this dynamic-->
+        <item>Sensor 2</item>
+    </string-array>
 </resources>

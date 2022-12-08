@@ -2,7 +2,10 @@ package com.smarthome.gesturecontrol;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,6 +13,8 @@ public class AddGesture extends AppCompatActivity {
 
     Button buttonCancel;
     Button buttonConfirm;
+
+    ListView simpleListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,10 @@ public class AddGesture extends AppCompatActivity {
                 openGestureActivity(MainActivity.class);
             }
         });
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.devices));
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        autoCompleteTextView.setAdapter(arrayAdapter);
     }
 
     public void openGestureActivity(Class gesture) {
