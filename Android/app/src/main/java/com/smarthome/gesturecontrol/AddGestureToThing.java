@@ -5,21 +5,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class AddGesture extends AppCompatActivity {
+public class AddGestureToThing extends AppCompatActivity {
 
     Button buttonCancel;
     Button buttonConfirm;
 
-    ListView simpleListView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_gesture);
+        setContentView(R.layout.activity_add_gesture_to_thing);
 
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
@@ -27,27 +24,22 @@ public class AddGesture extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(MainActivity.class);
+                openGestureActivity(AddGestureToThing.class);
             }
         });
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(AddGestureToThing.class);
+                openGestureActivity(MainActivity.class);
             }
         });
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.devices));
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.actions));
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
-        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.sensors));
-        AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
-        autoCompleteTextView2.setAdapter(arrayAdapter2);
-
     }
-
     public void openGestureActivity(Class gesture) {
         Intent intent = new Intent(this, gesture);
         startActivity(intent);
