@@ -24,7 +24,7 @@ public class AddGestureToThing extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(AddGestureToThing.class);
+                openGestureActivity(AddGesture.class);
             }
         });
 
