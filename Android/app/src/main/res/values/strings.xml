@@ -15,4 +15,10 @@
         <item>Turn On</item> <!--Test data make this dynamic-->
         <item>Turn Off</item>
     </string-array>
+
+    <string-array name="gestures">
+        <item>Gesture 1</item> <!--Test data make this dynamic-->
+        <item>Gesture 2</item>
+    </string-array>
+
 </resources>
