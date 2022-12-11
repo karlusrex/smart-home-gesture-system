@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class EditGesture extends AppCompatActivity {
+public class EditGestureToThing extends AppCompatActivity {
 
     Button buttonCancel;
     Button buttonConfirm;
@@ -16,7 +16,7 @@ public class EditGesture extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_gesture);
+        setContentView(R.layout.activity_edit_gesture_to_thing);
 
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
@@ -24,25 +24,25 @@ public class EditGesture extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(MainActivity.class);
+                openGestureActivity(AddGesture.class);
             }
         });
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(EditGestureToThing.class);
+                openGestureActivity(MainActivity.class);
             }
         });
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.gestures));
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.actions));
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
-
     }
 
     public void openGestureActivity(Class gesture) {
         Intent intent = new Intent(this, gesture);
         startActivity(intent);
     }
+
 }
