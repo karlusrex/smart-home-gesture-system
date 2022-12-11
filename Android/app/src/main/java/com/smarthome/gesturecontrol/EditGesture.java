@@ -14,7 +14,7 @@ public class EditGesture extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_gesture);
+        setContentView(R.layout.activity_edit_gesture);
 
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
