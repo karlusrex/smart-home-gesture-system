@@ -19,7 +19,7 @@ timestamp = str(time.mktime(localtime))
 nonce = uuid.uuid4().hex
 oauthSignature = (privkey + "%26" + secret)
 
-debugging = True
+debugging = False
 
 #Plan to merge getResponse and deviceAction into one function
 def getResponse(method):
@@ -56,15 +56,15 @@ def deviceAction(action, deviceid):
     return responseData
 
 def getDevices(): 
-    deviceDict = {}
+    deviceList = []
     for device in getResponse("devices/list")["device"]:
         #Mapping device name to ID
-        deviceDict[device["name"]] = device["id"]
-    return deviceDict
+        deviceList.append(device["id"])
+    return deviceList
 
 def getSensors():
     sensorDict = {}
     for sensor in getResponse("sensors/list")["sensor"]:
         #Mapping sensor ID to temperature
-        sensorDict[sensor["sensorId"]] = sensor["temperature"]
+        sensorDict[sensor["id"]] = sensor["temp"]
     return sensorDict

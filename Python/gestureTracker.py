@@ -2,6 +2,7 @@
 import mediapipe
 import cv2
 from datetime import datetime, timedelta
+from dataHandler import handleGestureRecognition
 
 drawingModule = mediapipe.solutions.drawing_utils
 handsModule = mediapipe.solutions.hands
@@ -35,6 +36,8 @@ with handsModule.Hands(static_image_mode=False, min_detection_confidence=0.7, mi
                     else: 
                         gestureBoolArray.append(0)
                 print(gestureBoolArray)
+                handleGestureRecognition(gestureBoolArray)
+
                 gestureBoolArray = []
         
             pause = datetime.now() + timedelta(seconds=2.0)
