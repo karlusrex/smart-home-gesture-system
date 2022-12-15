@@ -1,6 +1,6 @@
 import json
 from tellstickHandler import getSensors, getDevices, deviceAction
-
+from tts import speak
 
 def handleGestureRecognition(boolArray):
     gestures = getGestures()
@@ -11,7 +11,7 @@ def handleGestureRecognition(boolArray):
             for sensor in sensors:
                 if deviceid == sensor:
                     temp = sensors[sensor]
-                    print(temp)
+                    speak("The temperature is" + temp + "degrees celsius")
 
             devices = getDevices()
             for device in devices:
