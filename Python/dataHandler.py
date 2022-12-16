@@ -19,12 +19,10 @@ def handleGestureRecognition(boolArray):
                     action = gestures[savedgesture]["action"]
                     deviceAction(action, deviceid)
 
-
 def getGestures():
     with open('./smart-home-gesture-system/Python/data/data.json') as file:
         gestures = json.load(file)
         return gestures
-
 
 def saveGesture(boolarray, name, action, device):
     gestures = getGestures()
@@ -62,24 +60,26 @@ def saveGesture(boolarray, name, action, device):
         with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
             json.dump(gestures, file)
 
-
 def editGesture(oldname, boolarray, newname, action, device):
     gestures = getGestures()
     editgesture = 0
+    conflict = False
     for gesture in gestures:
         if gestures[gesture]["name"] == oldname:
             editgesture = gesture
+        if gestures[gesture]["array"] == boolarray:
+            conflict = True
 
-    edit = gestures[editgesture]
+    if not conflict:
+        edit = gestures[editgesture]
 
-    edit["array"] = boolarray
-    edit["name"] = newname
-    edit["action"] = action
-    edit["device"] = device
+        edit["array"] = boolarray
+        edit["name"] = newname
+        edit["action"] = action
+        edit["device"] = device
 
-    with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
-        json.dump(gestures, file)
-
+        with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
+            json.dump(gestures, file)
 
 def removeGesture(name):
     gestures = getGestures()
@@ -87,7 +87,8 @@ def removeGesture(name):
     for gesture in gestures:
         if gestures[gesture]["name"] == name:
             removegesture = gesture
-
+    
     gestures.pop(removegesture)
+    
     with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
         json.dump(gestures, file)
