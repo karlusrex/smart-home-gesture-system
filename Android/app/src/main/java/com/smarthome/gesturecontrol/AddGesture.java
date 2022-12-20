@@ -77,7 +77,7 @@ public class AddGesture extends AppCompatActivity {
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
-        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, SensorList);
+        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, sensorList);
         AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
         autoCompleteTextView2.setAdapter(arrayAdapter2);
 
