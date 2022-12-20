@@ -11,10 +11,11 @@ import java.io.InputStreamReader;
 
 public class RunSSH {
 
-    public void run (String command) {
+    public static String run(String command) {
         String hostname = "hostname";
         String username = "username";
         String password = "password";
+        StringBuilder stringBuilder = new StringBuilder();
         try
         {
             Connection conn = new Connection(hostname); //init connection
@@ -32,7 +33,7 @@ public class RunSSH {
                 String line = br.readLine(); // read line
                 if (line == null)
                     break;
-                System.out.println(line);
+                stringBuilder.append(line);
             }
             /* Show exit status, if available (otherwise "null") */
             System.out.println("ExitCode: " + sess.getExitStatus());
@@ -42,5 +43,6 @@ public class RunSSH {
         catch (IOException e)
         { e.printStackTrace(System.err);
             System.exit(2); }
+        return stringBuilder.toString();
     }
 }
