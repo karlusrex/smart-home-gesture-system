@@ -3,6 +3,7 @@ package com.smarthome.gesturecontrol;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -59,6 +60,28 @@ public class AddGesture extends AppCompatActivity {
             }
         }.execute(1);
 
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.devices));
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+
+        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.sensors));
+        AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
+        autoCompleteTextView2.setAdapter(arrayAdapter2);
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                autoCompleteTextView2.setEnabled(false);
+            }
+        });
+
+        autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                autoCompleteTextView.setEnabled(false);
+            }
+        });
+
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,14 +95,6 @@ public class AddGesture extends AppCompatActivity {
                 openGestureActivity(AddGestureToThing.class);
             }
         });
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, deviceList);
-        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextView.setAdapter(arrayAdapter);
-
-        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, sensorList);
-        AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
-        autoCompleteTextView2.setAdapter(arrayAdapter2);
 
     }
 
