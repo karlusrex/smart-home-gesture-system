@@ -59,8 +59,8 @@ def getDevices():
     deviceList = {}
     for device in getResponse("devices/list")["device"]:
         #Mapping device name to ID
-        deviceList[device["id"]] = device["name"]
-    return json.dumps(deviceList)
+        deviceList[device["id"]] = {"name": device["name"]}    
+        return deviceList
 
 def getSensors():
     sensorDict = {}
@@ -70,4 +70,4 @@ def getSensors():
             "temp": sensor["temp"],
             "humidity": sensor["humidity"]
         }
-    return json.dumps(sensorDict)
+    return sensorDict
