@@ -21,7 +21,7 @@ public class AddGesture extends AppCompatActivity {
     Button buttonConfirm;
 
     JSONObject devicesData;
-    String[] sensors={};
+    JSONObject sensorsData;
     ArrayList<String> deviceList = new ArrayList<String>();
     ArrayList<String> sensorList = new ArrayList<String>();
     String returnValueDevices = "";
@@ -38,7 +38,7 @@ public class AddGesture extends AppCompatActivity {
             @Override
             protected Void doInBackground(Integer... params) {
                 //getting all the devices available, should be run as followed "python /location/to/python.py", currently for testing purposes python3 smart-home-gesture-system-main/Python/tellstickHandler.py
-                returnValueDevices = RunSSH.run("");
+                returnValueDevices = RunSSH.run("python3 smart-home-gesture-system-main/Python/tellstickHandler.py");
                 return null;
             }
             @Override
@@ -64,13 +64,24 @@ public class AddGesture extends AppCompatActivity {
             @Override
             protected Void doInBackground(Integer... params) {
                 //getting all the sensors available, should be run as followed "python /location/to/python.py"
-                returnValueSensors = RunSSH.run("");
+                returnValueSensors = RunSSH.run("python3 smart-home-gesture-system-main/Python/tellstickHandler.py");
                 return null;
             }
             @Override
             protected void onPostExecute(Void v) {
-                sensors = returnValueSensors.split(" ");
-                for (String s : sensors) {sensorList.add(s) ;}
+                try {
+                    JSONObject jsonObject = new JSONObject(returnValueSensors);
+                    System.out.println(jsonObject);
+                    Iterator<String> stringIterator = jsonObject.keys();
+                    for (Iterator<String> it = stringIterator; it.hasNext(); ) {
+                        String string = it.next();
+                        System.out.println(jsonObject.getJSONObject(string).getString("name"));
+                        sensorList.add(jsonObject.getJSONObject(string).getString("name"));
+                    }
+                    sensorsData = jsonObject;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }.execute(1);
 
@@ -78,7 +89,7 @@ public class AddGesture extends AppCompatActivity {
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
-        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.sensors));
+        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.dropdown_item, sensorList);
         AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
         autoCompleteTextView2.setAdapter(arrayAdapter2);
 
@@ -99,8 +110,7 @@ public class AddGesture extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO create same for sensorsData as devicesData
-                openGestureActivity(MainActivity.class, sensorList.toString());
+                openGestureActivity(MainActivity.class, sensorsData.toString());
             }
         });
 
