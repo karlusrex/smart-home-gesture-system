@@ -68,6 +68,7 @@ def getSensors():
         #Mapping sensor ID to temperature
         sensorDict[sensor["id"]] = {
             "temp": sensor["temp"],
-            "humidity": sensor["humidity"]
+            "humidity": sensor["humidity"],
+            "name": sensor["name"]
         }
     return sensorDict
