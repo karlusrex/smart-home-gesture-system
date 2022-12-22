@@ -27,3 +27,14 @@ Dependencies:
 - pip install gTTS
 - pip install mpg321
 - pip install python-dotenv
+
+## .env file setup:
+
+- 1. Create a file in root directory called .env
+- 2. In the file create four variables called PUBKEY, PRIVKEY, TOKEN, SECRET - You can find these values at http://api.telldus.com/keys/generatePrivate
+
+The .env file will look like the following:
+PUBKEY =  "YOUR_PUBLIC_KEY"
+PRIVKEY = "YOUR_PRIVKEY_KEY"
+TOKEN =   "YOUR_TOKEN_KEY"
+SECRET =  "YOUR_SECRET_KEY"
