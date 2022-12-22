@@ -9,15 +9,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AddGesture extends AppCompatActivity {
 
     Button buttonCancel;
     Button buttonConfirm;
 
-    String[] devices={};
+    JSONObject devicesData;
     String[] sensors={};
     ArrayList<String> deviceList = new ArrayList<String>();
     ArrayList<String> sensorList = new ArrayList<String>();
@@ -34,14 +37,25 @@ public class AddGesture extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Integer... params) {
-                //getting all the devices available, should be run as followed "python /location/to/python.py"
+                //getting all the devices available, should be run as followed "python /location/to/python.py", currently for testing purposes python3 smart-home-gesture-system-main/Python/tellstickHandler.py
                 returnValueDevices = RunSSH.run("");
                 return null;
             }
             @Override
             protected void onPostExecute(Void v) {
-                devices = returnValueDevices.split(" ");
-                for (String s : devices) {deviceList.add(s) ;}
+                try {
+                    JSONObject jsonObject = new JSONObject(returnValueDevices);
+                    System.out.println(jsonObject);
+                    Iterator<String> stringIterator = jsonObject.keys();
+                    for (Iterator<String> it = stringIterator; it.hasNext(); ) {
+                        String string = it.next();
+                        System.out.println(jsonObject.getJSONObject(string).getString("name"));
+                        deviceList.add(jsonObject.getJSONObject(string).getString("name"));
+                    }
+                    devicesData = jsonObject;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }.execute(1);
 
@@ -60,7 +74,7 @@ public class AddGesture extends AppCompatActivity {
             }
         }.execute(1);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.devices));
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, deviceList);
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
@@ -85,21 +99,23 @@ public class AddGesture extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(MainActivity.class);
+                //TODO create same for sensorsData as devicesData
+                openGestureActivity(MainActivity.class, sensorList.toString());
             }
         });
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(AddGestureToThing.class);
+                openGestureActivity(AddGestureToThing.class, devicesData.toString());
             }
         });
 
     }
 
-    public void openGestureActivity(Class gesture) {
+    public void openGestureActivity(Class gesture, String stringExtra) {
         Intent intent = new Intent(this, gesture);
+        intent.putExtra("devices", stringExtra);
         startActivity(intent);
     }
 }
