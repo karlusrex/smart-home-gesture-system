@@ -21,11 +21,15 @@ public class AddGesture extends AppCompatActivity {
     Button buttonConfirm;
 
     JSONObject devicesData;
+    JSONObject devicesDataExtra;
     JSONObject sensorsData;
+    JSONObject sensorsDataExtra;
     ArrayList<String> deviceList = new ArrayList<String>();
     ArrayList<String> sensorList = new ArrayList<String>();
     String returnValueDevices = "";
     String returnValueSensors = "";
+
+    String thingValue = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,7 @@ public class AddGesture extends AppCompatActivity {
             @Override
             protected Void doInBackground(Integer... params) {
                 //getting all the devices available, should be run as followed "python /location/to/python.py", currently for testing purposes python3 smart-home-gesture-system-main/Python/tellstickHandler.py
-                returnValueDevices = RunSSH.run("python3 smart-home-gesture-system-main/Python/tellstickHandler.py");
+                returnValueDevices = RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function getDevices");
                 return null;
             }
             @Override
@@ -64,7 +68,7 @@ public class AddGesture extends AppCompatActivity {
             @Override
             protected Void doInBackground(Integer... params) {
                 //getting all the sensors available, should be run as followed "python /location/to/python.py"
-                returnValueSensors = RunSSH.run("python3 smart-home-gesture-system-main/Python/tellstickHandler.py");
+                returnValueSensors = RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function getSensors");
                 return null;
             }
             @Override
@@ -95,29 +99,56 @@ public class AddGesture extends AppCompatActivity {
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                thingValue = "device";
                 autoCompleteTextView2.setEnabled(false);
+                String selectedItem = (String) adapterView.getItemAtPosition(position);
+                Iterator<String> stringIterator = sensorsData.keys();
+                for (Iterator<String> it = stringIterator; it.hasNext(); ) {
+                    String string = it.next();
+                    if (string.equals(selectedItem)) {
+                        try {
+                            devicesDataExtra = sensorsData.getJSONObject(string);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             }
         });
 
         autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                thingValue = "sensor";
                 autoCompleteTextView.setEnabled(false);
+                //TODO add so that it can determine what sensors is selected and use it in stringExtra
+                String selectedItem = (String) adapterView.getItemAtPosition(position);
+                Iterator<String> stringIterator = sensorsData.keys();
+                for (Iterator<String> it = stringIterator; it.hasNext(); ) {
+                    String string = it.next();
+                    if (string.equals(selectedItem)) {
+                        try {
+                            sensorsDataExtra = sensorsData.getJSONObject(string);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             }
         });
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(MainActivity.class, sensorsData.toString());
+                openGestureActivity(MainActivity.class, sensorsDataExtra.toString());
             }
         });
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(AddGestureToThing.class, devicesData.toString());
+                openGestureActivity(AddGestureToThing.class, devicesDataExtra.toString());
             }
         });
 
@@ -125,7 +156,9 @@ public class AddGesture extends AppCompatActivity {
 
     public void openGestureActivity(Class gesture, String stringExtra) {
         Intent intent = new Intent(this, gesture);
-        intent.putExtra("devices", stringExtra);
+        //TODO create thingId parameter to take the selected device and send it as stringExtra
+        intent.putExtra("thingId", stringExtra);
+        intent.putExtra("thingType", thingValue);
         startActivity(intent);
     }
 }
