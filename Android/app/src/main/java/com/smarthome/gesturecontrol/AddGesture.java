@@ -122,7 +122,6 @@ public class AddGesture extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 thingValue = "sensor";
                 autoCompleteTextView.setEnabled(false);
-                //TODO add so that it can determine what sensors is selected and use it in stringExtra
                 String selectedItem = (String) adapterView.getItemAtPosition(position);
                 Iterator<String> stringIterator = sensorsData.keys();
                 for (Iterator<String> it = stringIterator; it.hasNext(); ) {
@@ -156,7 +155,6 @@ public class AddGesture extends AppCompatActivity {
 
     public void openGestureActivity(Class gesture, String stringExtra) {
         Intent intent = new Intent(this, gesture);
-        //TODO create thingId parameter to take the selected device and send it as stringExtra
         intent.putExtra("thingId", stringExtra);
         intent.putExtra("thingType", thingValue);
         startActivity(intent);
