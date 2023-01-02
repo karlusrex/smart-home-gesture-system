@@ -11,9 +11,14 @@
         <item>Sensor 2</item>
     </string-array>
 
-    <string-array name="actions">
-        <item>Turn On</item> <!--Test data make this dynamic-->
-        <item>Turn Off</item>
+    <string-array name="deviceActions">
+        <item>device/turnOn</item> <!--Test data make this dynamic-->
+        <item>device/turnOff</item>
+    </string-array>
+
+    <string-array name="sensorActions">
+        <item>getTemperature</item>
+        <item>getHumidity</item>
     </string-array>
 
     <string-array name="gestures">

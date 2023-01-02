@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:hint="Name The Gesture"
-        />
+                android:id="@+id/textInputText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
             android:text="Gesture Consists Of:"
@@ -71,9 +71,17 @@
     <TextView
             android:text="Index Finger Up"
             android:layout_width="254dp"
-            android:layout_height="42dp" android:id="@+id/textView3"
+            android:layout_height="42dp" android:id="@+id/textViewGestures"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintVertical_bias="0.423"
             android:textSize="16sp"/>
+    <Button
+            android:text="Update Gesture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/buttonUpdateGesture"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintVertical_bias="0.532"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
