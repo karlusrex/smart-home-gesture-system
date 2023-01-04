@@ -63,23 +63,19 @@ def saveGesture(boolarray, name, action, device):
 def editGesture(oldname, boolarray, newname, action, device):
     gestures = getGestures()
     editgesture = 0
-    conflict = False
     for gesture in gestures:
         if gestures[gesture]["name"] == oldname:
             editgesture = gesture
-        if gestures[gesture]["array"] == boolarray:
-            conflict = True
 
-    if not conflict:
-        edit = gestures[editgesture]
+    edit = gestures[editgesture]
 
-        edit["array"] = boolarray
-        edit["name"] = newname
-        edit["action"] = action
-        edit["device"] = device
+    edit["array"] = boolarray
+    edit["name"] = newname
+    edit["action"] = action
+    edit["device"] = device
 
-        with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
-            json.dump(gestures, file)
+    with open('./smart-home-gesture-system/Python/data/data.json', "w") as file:
+        json.dump(gestures, file)
 
 def removeGesture(name):
     gestures = getGestures()

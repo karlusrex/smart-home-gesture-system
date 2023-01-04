@@ -59,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:hint="Name The Gesture"
-                android:id="@+id/textInputText"/>
+                android:id="@+id/textInputText"
+            />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
             android:text="Gesture Consists Of:"
