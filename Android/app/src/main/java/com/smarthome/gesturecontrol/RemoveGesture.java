@@ -2,16 +2,29 @@ package com.smarthome.gesturecontrol;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.AsyncTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RemoveGesture extends AppCompatActivity {
 
+    JSONObject gestureData;
     Button buttonCancel;
     Button buttonConfirm;
+    String savedGestures = "";
+    String selectedGesture = "";
+    ArrayList<String> gestureList = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,23 +34,86 @@ public class RemoveGesture extends AppCompatActivity {
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
 
-        //AsyncTask
+        new AsyncTask<Integer, Void, Void>(){
+
+            @Override
+            protected Void doInBackground(Integer... params) {
+                //getting all the devices available, should be run as followed "python /location/to/python.py", currently for testing purposes python3 smart-home-gesture-system-main/Python/tellstickHandler.py
+                savedGestures = RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function getGestures");
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void v) {
+                try {
+                    JSONObject jsonObject = new JSONObject(savedGestures);
+                    System.out.println(jsonObject);
+                    Iterator<String> stringIterator = jsonObject.keys();
+                    for (Iterator<String> it = stringIterator; it.hasNext(); ) {
+                        String string = it.next();
+                        System.out.println(jsonObject.getJSONObject(string).getString("name"));
+                        gestureList.add(jsonObject.getJSONObject(string).getString("name"));
+                    }
+                    gestureData = jsonObject;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }.execute(1);
+
+
+
+
         //Få ut gestures
+
         //ersätt getResources().getStringArray(R.array.gestures) med de sparade gestures
 
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
+
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, gestureList);
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+
+
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                selectedGesture = (String) adapterView.getItemAtPosition(position);
+            }
+        });
+
+        //Få ut selected gesture i ArrayAdapter
+
+
+
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Ny asynctask för att ta bort, genom att kalla main.py --function removeGesture
+                new AsyncTask<Integer, Void, Void>(){
+
+                    @Override
+                    protected Void doInBackground(Integer... params) {
+                        //Ny asynctask för att ta bort, genom att kalla main.py --function removeGesture
+                        //RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture");
+                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture %s", selectedGesture));
+                        return null;
+                    }
+                }.execute(1);
                 openGestureActivity(MainActivity.class);
             }
         });
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.gestures));
-        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextView.setAdapter(arrayAdapter);
 
-        //Få ut selected gesture i ArrayAdapter
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGestureActivity(MainActivity.class);
+            }
+        });
+
+
+
 
     }
 

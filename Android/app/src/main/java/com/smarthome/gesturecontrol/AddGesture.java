@@ -97,6 +97,10 @@ public class AddGesture extends AppCompatActivity {
         AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
         autoCompleteTextView2.setAdapter(arrayAdapter2);
 
+
+
+        //Ska denna använda devicesData?
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
