@@ -43,7 +43,6 @@ public class AddGestureToThing extends AppCompatActivity {
             Iterator<String> stringIterator = thingJSONObject.keys();
             for (Iterator<String> it = stringIterator; it.hasNext(); ) {
                 thingObjectId= it.next();
-                textInputEditText.setText(thingJSONObject.getJSONObject(thingObjectId).toString());
             }
 
 
