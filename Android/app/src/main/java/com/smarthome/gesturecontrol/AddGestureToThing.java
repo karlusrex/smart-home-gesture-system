@@ -86,7 +86,7 @@ public class AddGestureToThing extends AppCompatActivity {
                     @Override
                     protected Void doInBackground(Integer... params) {
                         //getting all the sensors available, should be run as followed "python /location/to/python.py"
-                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function saveGesture %s", gestureBoolArray, textInputEditText.getText().toString(), selectedAction, thingObjectId));
+                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function saveGesture %s %s %s %s", gestureBoolArray, textInputEditText.getText().toString(), selectedAction, thingObjectId));
                         return null;
                     }
                 }.execute(1);
