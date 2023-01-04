@@ -6,7 +6,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.os.AsyncTask;
 
@@ -34,7 +36,7 @@ public class RemoveGesture extends AppCompatActivity {
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
 
-        new AsyncTask<Integer, Void, Void>(){
+        new AsyncTask<Integer, Void, Void>() {
 
             @Override
             protected Void doInBackground(Integer... params) {
@@ -42,6 +44,7 @@ public class RemoveGesture extends AppCompatActivity {
                 savedGestures = RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function getGestures");
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void v) {
                 try {
@@ -61,18 +64,9 @@ public class RemoveGesture extends AppCompatActivity {
         }.execute(1);
 
 
-
-
-        //Få ut gestures
-
-        //ersätt getResources().getStringArray(R.array.gestures) med de sparade gestures
-
-
-
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, gestureList);
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
-
 
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,20 +76,14 @@ public class RemoveGesture extends AppCompatActivity {
             }
         });
 
-        //Få ut selected gesture i ArrayAdapter
-
-
-
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AsyncTask<Integer, Void, Void>(){
+                new AsyncTask<Integer, Void, Void>() {
 
                     @Override
                     protected Void doInBackground(Integer... params) {
-                        //Ny asynctask för att ta bort, genom att kalla main.py --function removeGesture
-                        //RunSSH.run("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture");
                         RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture %s", selectedGesture));
                         return null;
                     }
@@ -111,9 +99,6 @@ public class RemoveGesture extends AppCompatActivity {
                 openGestureActivity(MainActivity.class);
             }
         });
-
-
-
 
     }
 
