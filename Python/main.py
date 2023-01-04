@@ -12,9 +12,12 @@ def main():
 
     if args.start:
         gestureTracker.startGestureTracker()
-    if args.function == "getDevices":
+    elif args.function == "getDevices":
         devices = tellstickHandler.getDevices()
         print(devices)
+    elif args.function == "getGestures":
+        gestures = dataHandler.getGestures()
+        print(gestures)
     elif args.function == "getSensors":
         sensors = tellstickHandler.getSensors()
         print(sensors)
