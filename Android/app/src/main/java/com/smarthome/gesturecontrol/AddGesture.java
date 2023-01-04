@@ -107,12 +107,12 @@ public class AddGesture extends AppCompatActivity {
                 thingValue = "device";
                 autoCompleteTextView2.setEnabled(false);
                 String selectedItem = (String) adapterView.getItemAtPosition(position);
-                Iterator<String> stringIterator = sensorsData.keys();
+                Iterator<String> stringIterator = devicesData.keys();
                 for (Iterator<String> it = stringIterator; it.hasNext(); ) {
                     String string = it.next();
                     if (string.equals(selectedItem)) {
                         try {
-                            devicesDataExtra = sensorsData.getJSONObject(string);
+                            devicesDataExtra = devicesData.getJSONObject(string);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -151,7 +151,11 @@ public class AddGesture extends AppCompatActivity {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGestureActivity(AddGestureToThing.class, devicesDataExtra.toString());
+                if (devicesDataExtra == null) {
+                    openGestureActivity(AddGestureToThing.class, sensorsDataExtra.toString());
+                } else {
+                    openGestureActivity(AddGestureToThing.class, devicesDataExtra.toString());
+                }
             }
         });
 
