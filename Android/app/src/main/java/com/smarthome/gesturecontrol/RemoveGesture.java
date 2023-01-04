@@ -21,9 +21,14 @@ public class RemoveGesture extends AppCompatActivity {
         buttonCancel = (Button) findViewById(R.id.cancel);
         buttonConfirm = (Button) findViewById(R.id.confirm);
 
+        //AsyncTask
+        //Få ut gestures
+        //ersätt getResources().getStringArray(R.array.gestures) med de sparade gestures
+
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Ny asynctask för att ta bort, genom att kalla main.py --function removeGesture
                 openGestureActivity(MainActivity.class);
             }
         });
@@ -31,6 +36,9 @@ public class RemoveGesture extends AppCompatActivity {
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_item, getResources().getStringArray(R.array.gestures));
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         autoCompleteTextView.setAdapter(arrayAdapter);
+
+        //Få ut selected gesture i ArrayAdapter
+
     }
 
     public void openGestureActivity(Class gesture) {
