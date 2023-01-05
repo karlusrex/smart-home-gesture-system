@@ -101,7 +101,7 @@ public class EditGestureToThing extends AppCompatActivity {
                     @Override
                     protected Void doInBackground(Integer... params) {
                         //getting all the sensors available, should be run as followed "python /location/to/python.py"
-                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function editGesture %s %s %s %s %s", oldName, gestureBoolArray, textInputEditGesture.getText().toString(), selectedAction, thingId));
+                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function editGesture --args %s %s %s %s %s", oldName, gestureBoolArray, textInputEditGesture.getText().toString(), selectedAction, thingId));
                         return null;
                     }
                 }.execute(1);

@@ -84,7 +84,7 @@ public class RemoveGesture extends AppCompatActivity {
 
                     @Override
                     protected Void doInBackground(Integer... params) {
-                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture %s", selectedGesture));
+                        RunSSH.run(String.format("python3 smart-home-gesture-system-main/Python/main.py --function removeGesture --args %s", selectedGesture));
                         return null;
                     }
                 }.execute(1);
